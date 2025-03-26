@@ -5,7 +5,7 @@ import useMediaQuery from "../useMediaQuery";
 import "../styles/Carousel.scss";
 
 import video1 from "../assets/1.mp4";
-import video2 from "../assets/2.mp4";
+// import video2 from "../assets/2.mp4"; asset to large to push to github
 import video3 from "../assets/3.mp4";
 import video4 from "../assets/4.mp4";
 import video5 from "../assets/5.mp4";
@@ -27,7 +27,7 @@ import soundOffIcon from "../assets/sound off.svg";
 
 const rawVideos = [
   { src: video1, title: "Whispers of Ipsum" },
-  { src: video2, title: "Forest of Lorem Ipsum" },
+  // { src: video2, title: "Forest of Lorem Ipsum" },
   { src: video3, title: "Lorem Ipsum in the Wilderness" },
   { src: video4, title: "The Ipsum Tide" },
   { src: video5, title: "Echoes of Ipsum" },
