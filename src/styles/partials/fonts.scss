@@ -1,0 +1,39 @@
+@font-face {
+    font-family: "Campton";
+    src: url("../assets/fonts/Campton/Campton-Black.otf") format("opentype");
+    src: url("../assets/fonts/Campton/Campton-Bold.otf") format("opentype");
+    font-weight: normal;
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Larsseit';
+    src:  url("../assets/fonts/Larsseit/Larsseit.otf") format("opentype");
+    src:  url("../assets/fonts/Larsseit/Larsseit-Bold.otf") format("opentype");
+    font-weight: normal;
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quincy';
+    src:  url("../assets/fonts/Quincy/quincycf-black.otf") format("opentype");
+    src:  url("../assets/fonts/Quincy/quincycf-bold.otf") format("opentype");
+    font-weight: normal;
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'QuincyCF';
+    src:  url("../assets/fonts/QuincyCF/QuincyCF-Bold.otf") format("opentype");
+    src:  url("../assets/fonts/QuincyCF/QuincyCF-Black.otf") format("opentype");
+    font-weight: normal;
+    font-weight: bold;
+    font-style: normal;
+}
+
+body {
+    font-family: "Campten", sans-serif;
+  }

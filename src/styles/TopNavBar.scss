@@ -1,0 +1,121 @@
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.25rem 1rem;
+    font-size: 0.75rem;
+    background-color: #69A2FF;
+    color: white;
+
+    @media (min-width: 1280px) {
+        padding: 0.5rem 4rem;
+        gap: 2rem;
+    }
+  
+    &__info {
+      flex: 1;
+      text-align: left;
+    }
+
+    &__divider {
+        margin: 0 0.5rem;
+    }
+  
+    &__info--mobile {
+      font-size: .5rem;
+  
+      @media (min-width: 1280px) {
+        display: none;
+      }
+    }
+  
+    &__info--desktop {
+      display: none;
+  
+      @media (min-width: 1280px) {
+        display: inline;
+      }
+    }
+  
+    &__links {
+      display: none;
+  
+      @media (min-width: 1280px) {
+        display: flex;
+        gap: 1.5rem;
+      }
+    }
+  
+    &__link {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  
+    &__locale {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      cursor: pointer;
+      white-space: nowrap;
+
+      @media (min-width: 768px) {
+        gap: 0.5rem;
+      }
+    }
+  
+    &__lang {
+      font-weight: 500;
+      font-size: .5rem;
+
+      @media (min-width: 768px) {
+        font-size:.75rem;
+      }
+    }
+  
+    &__flag {
+      height: 1rem;
+      border-radius: 100%;
+    }
+  
+    &__arrow {
+      transform: translateY(1px);
+    }
+  
+    &__dropdown {
+      position: absolute;
+      top: 1.8rem;
+      right: 0;
+      background-color: #0B2341;
+      border: 1px solid #69A2FF;
+      border-radius: 4px;
+      padding: 0.5rem;
+      z-index: 100;
+      list-style: none;
+      min-width: 120px;
+    }
+  
+    &__option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0;
+      cursor: pointer;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  
+    &__option-label {
+      font-size: 0.75rem;
+    }
+  }
+  
