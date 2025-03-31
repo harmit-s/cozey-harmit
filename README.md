@@ -16,6 +16,8 @@ Cozey: Frontend Developer Carousel Component Challenge Part 2
 -No scrollIntoView, refs arrays, or DOM-heavy updates
 -Used SCSS (proper nesting, media queries for responsive working across all devices, partials ) for maintainability, readiblity, quality 
 
+*Removed all mp3 video assets so I could push to github, will need to add those back in to see the development server
+
 By: Harmit Sidhu
 
 # npm run dev to start develpment server
