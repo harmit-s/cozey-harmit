@@ -1,176 +1,182 @@
 .carousel {
-    padding: 2rem 1rem 2.5rem 1rem;
-    text-align: center;
-    background-color: #ECEBE7;
-  
+  padding: 2rem 1rem 2.5rem 1rem;
+  text-align: center;
+  background-color: #ECEBE7;
+
+  @media (min-width: 1280px) {
+    padding: 2.5rem 1rem 5rem 5rem;
+  }
+
+  &__title-container {
+    position: relative;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 600;
+    padding-bottom: 1rem;
+    margin: 0;
+    text-align: left;
+    color: #627184;
+
     @media (min-width: 1280px) {
-      padding: 2.5rem 1rem 5rem 5rem;
+      font-size: 1.5rem;
+      padding-bottom: 1.75rem;
     }
-  
-    &__title-container {
-      position: relative;
+  }
+
+  &__wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__scroller {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 0.75rem;
+    scroll-behavior: smooth;
+    padding: 0;
+
+    &::-webkit-scrollbar {
+      display: none;
     }
-  
-    &__title {
-      font-size: 1rem;
-      font-weight: 600;
-      padding-bottom: 1rem;
-      margin: 0;
-      text-align: left;
-      color: #627184;
-  
-      @media (min-width: 1280px) {
-        font-size: 1.5rem;
-        padding-bottom: 1.75rem;
-      }
+
+    @media (min-width: 768px) {
+      justify-content: center;
+      overflow-x: visible;
     }
-  
-    &__wrapper {
-      position: relative;
-      overflow: hidden;
+
+    @media (min-width: 1280px) {
+      gap: 1rem;
     }
-  
-    &__scroller {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 0.75rem;
-      scroll-behavior: smooth;
-      padding: 0;
-  
-      &::-webkit-scrollbar {
-        display: none;
-      }
-  
-      @media (min-width: 768px) {
-        justify-content: center;
-        overflow-x: visible;
-      }
-  
-      @media (min-width: 1280px) {
-        gap: 1rem;
-      }
+  }
+
+  &__item {
+    flex: 0 0 80%;
+    scroll-snap-align: center;
+    transition: transform 0.3s ease;
+
+    @media (min-width: 768px) {
+      flex: 0 0 45%;
     }
-  
-    &__item {
-      flex: 0 0 80%;
-      scroll-snap-align: center;
-      transition: transform 0.3s ease;
-  
-      @media (min-width: 768px) {
-        flex: 0 0 45%;
-      }
-  
-      @media (min-width: 1024px) {
-        flex: 0 0 30%;
-      }
-  
-      @media (min-width: 1280px) {
-        flex: 0 0 18%;
-      }
+
+    @media (min-width: 1024px) {
+      flex: 0 0 30%;
     }
-  
-    &__video-container {
-      position: relative;
-      width: 100%;
+
+    @media (min-width: 1280px) {
+      flex: 0 0 18%;
     }
-  
-    &__video-box {
-      border-radius: 1rem;
-      overflow: hidden;
-      transition: border 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  
-      &:hover {
-        border-color: rgba(255, 255, 255, 0.6);
-        box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
-        transform: scale(1.02);
-        cursor: pointer;
-      }
-  
-      &--active {
-        border: 4px solid #69A2FF;
-      }
-    }
-  
-    &__video {
-      width: 100%;
-      height: auto;
-      border-radius: 0.5rem;
-    }
-  
-    &__caption {
-      margin-top: 0.25rem;
-      text-align: left;
-      font-size: 0.66rem;
-      font-weight: 500;
-      color: #627184;
-  
-      @media (min-width: 1280px) {
-        font-size: 0.9rem;
-      }
-    }
-  
-    &__controls {
-      position: absolute;
-      bottom: 0.5rem;
-      right: 0.5rem;
-      display: flex;
-      flex-direction: column-reverse;
-  
-      @media (min-width: 1280px) {
-        top: 0.75rem;
-      }
-  
-      button {
-        background: rgba(0, 0, 0, 0);
-        border: none;
-        border-radius: 9999px;
-        padding: 0.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-      }
-  
-      img {
-        height: 1.8rem;
-      }
-    }
-  
-    &__arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      font-size: 2rem;
+  }
+
+  &__video-container {
+    position: relative;
+    width: 100%;
+  }
+
+  &__video-box {
+    position: relative;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 4px solid transparent; 
+    transition: border 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      // border-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+      transform: scale(1.02);
       cursor: pointer;
-      z-index: 10;
-  
+    }
+
+    &--active {
+      border: 4px solid #69A2FF;
+    }
+  }
+
+  &__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  &__caption {
+    margin-top: 0.25rem;
+    text-align: left;
+    font-size: 0.66rem;
+    font-weight: 500;
+    color: #627184;
+
+    @media (min-width: 1280px) {
+      font-size: 0.9rem;
+    }
+  }
+
+  &__controls {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    flex-direction: column-reverse;
+
+    @media (min-width: 1280px) {
+      top: 0.75rem;
+    }
+
+    button {
+      background: rgba(0, 0, 0, 0);
+      border: none;
+      border-radius: 9999px;
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    img {
+      height: 1.8rem;
+    }
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+
+    @media (min-width: 1280px) {
+      top: 15%;
+    }
+
+    &--prev {
+      right: 4.5rem;
+
       @media (min-width: 1280px) {
-        top: 15%;
+        left: unset;
+        right: 7.7rem;
+        background-color: white;
+        border-radius: 99%;
       }
-  
-      &--prev {
-        right: 4.5rem;
-  
-        @media (min-width: 1280px) {
-          left: unset;
-          right: 7.7rem;
-          background-color: white;
-          border-radius: 99%;
-        }
-      }
-  
-      &--next {
-        right: 0.5rem;
-  
-        @media (min-width: 1280px) {
-          right: 4rem;
-          background-color: white;
-          border-radius: 99%;
-        }
+    }
+
+    &--next {
+      right: 0.5rem;
+
+      @media (min-width: 1280px) {
+        right: 4rem;
+        background-color: white;
+        border-radius: 99%;
       }
     }
   }
-  
+}

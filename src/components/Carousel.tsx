@@ -5,7 +5,7 @@ import useMediaQuery from "../useMediaQuery";
 import "../styles/Carousel.scss";
 
 import video1 from "../assets/1.mp4";
-// import video2 from "../assets/2.mp4"; asset to large to push to github
+import video2 from "../assets/2.mp4";
 import video3 from "../assets/3.mp4";
 import video4 from "../assets/4.mp4";
 import video5 from "../assets/5.mp4";
@@ -27,7 +27,7 @@ import soundOffIcon from "../assets/sound off.svg";
 
 const rawVideos = [
   { src: video1, title: "Whispers of Ipsum" },
-  // { src: video2, title: "Forest of Lorem Ipsum" },
+  { src: video2, title: "Forest of Lorem Ipsum" },
   { src: video3, title: "Lorem Ipsum in the Wilderness" },
   { src: video4, title: "The Ipsum Tide" },
   { src: video5, title: "Echoes of Ipsum" },
@@ -67,11 +67,15 @@ const Carousel: React.FC = () => {
   const scrollToCenter = useCallback(() => {
     if (containerRef.current) {
       const child = containerRef.current.children[isDesktop ? 2 : 1] as HTMLElement;
-      if (child) {
-        const scrollOffset = child.offsetLeft - containerRef.current.offsetWidth / 2 + child.offsetWidth / 2;
+      if (containerRef.current && child) {
+        const scrollOffset =
+          child.offsetLeft -
+          containerRef.current.offsetWidth / 2 +
+          child.offsetWidth / 2;
+
         containerRef.current.scrollTo({
           left: scrollOffset,
-          behavior: "smooth",
+          behavior: "smooth"
         });
       }
     }
@@ -90,11 +94,14 @@ const Carousel: React.FC = () => {
       video.muted = isMuted;
 
       if (shouldBePlaying) {
-        if (isPlaying) video.play();
-        else video.pause();
+        if (isPlaying) {
+          video.play().catch(() => { }); 
+        } else {
+          video.pause();
+        }
       } else {
-        video.pause();
-        video.currentTime = 0;
+        if (!video.paused) video.pause();
+        video.currentTime = 0; 
       }
     });
   }, [isPlaying, isMuted, visibleVideos, isDesktop]);
@@ -132,15 +139,16 @@ const Carousel: React.FC = () => {
           {visibleVideos.map((item, i) => {
             const isActive = isDesktop ? i === 2 : i === 1;
             return (
-              <div className="carousel__item" key={i}>
+              <div className="carousel__item" key={item.src}> {/*  changed key from index to item.src */}
                 <div className="carousel__video-container">
                   <div className={`carousel__video-box ${isActive ? "carousel__video-box--active" : ""}`}>
                     <video
-                     ref={(el) => {
+                      ref={(el) => {
                         videoRefs.current[i] = el;
                       }}
                       src={item.src}
                       className="carousel__video"
+                      preload="metadata"
                       playsInline
                     />
                   </div>
