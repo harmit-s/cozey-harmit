@@ -156,7 +156,7 @@ const Carousel: React.FC = () => {
                       }}
                       src={item.src}
                       className="carousel__video"
-                      preload="metadata"
+                      preload={i <= (isDesktop ? 4 : 2) ? "metadata" : "none"}
                       playsInline
                     />
                   </div>

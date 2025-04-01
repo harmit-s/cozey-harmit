@@ -139,6 +139,14 @@
       cursor: pointer;
     }
 
+    button svg {
+      transition: transform 0.1s ease;
+    }
+
+    button:active svg {
+      transform: scale(1.2);
+    }
+
     img {
       height: 1.8rem;
     }
