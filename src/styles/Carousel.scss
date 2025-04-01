@@ -86,7 +86,6 @@
     transition: border 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
-      // border-color: rgba(255, 255, 255, 0.6);
       box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
       transform: scale(1.02);
       cursor: pointer;
@@ -178,6 +177,36 @@
         background-color: white;
         border-radius: 99%;
       }
+    }
+  }
+
+  &__progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    overflow: hidden;
+  
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50%;
+      height: 100%;
+      width: 50%;
+      background: linear-gradient(to right, #69A2FF, transparent);
+      animation: scrollbar-loop 4s linear infinite;
+    }
+  
+  }
+  
+  @keyframes scrollbar-loop {
+    from {
+      left: -50%;
+    }
+    to {
+      left: 100%;
     }
   }
 }

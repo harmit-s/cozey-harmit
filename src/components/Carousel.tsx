@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { useSwipeable } from "react-swipeable";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 import useMediaQuery from "../useMediaQuery";
 import "../styles/Carousel.scss";
 
@@ -47,15 +47,13 @@ const Carousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  const [saved, setSaved] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const isDesktop = useMediaQuery("(min-width: 1280px)");
   const VISIBLE_COUNT = useMemo(() => (isDesktop ? 5 : 3), [isDesktop]);
 
-  const extendedList = useMemo(
-    () => [...rawVideos, ...rawVideos, ...rawVideos],
-    []
-  );
+  const extendedList = useMemo(() => [...rawVideos, ...rawVideos, ...rawVideos], []);
   const baseLength = rawVideos.length;
   const virtualIndex = currentIndex + baseLength;
 
@@ -75,7 +73,7 @@ const Carousel: React.FC = () => {
 
         containerRef.current.scrollTo({
           left: scrollOffset,
-          behavior: "smooth"
+          behavior: "smooth",
         });
       }
     }
@@ -90,12 +88,11 @@ const Carousel: React.FC = () => {
       if (!video) return;
 
       const shouldBePlaying = isDesktop ? index === 2 : index === 1;
-
       video.muted = isMuted;
 
       if (shouldBePlaying) {
         if (isPlaying) {
-          video.play().catch(() => { });
+          void video.play().catch(() => {});
         } else {
           video.pause();
         }
@@ -117,6 +114,12 @@ const Carousel: React.FC = () => {
   const togglePlay = () => setIsPlaying((p) => !p);
   const toggleMute = () => setIsMuted((m) => !m);
 
+  const toggleSave = (src: string) => {
+    setSaved((prev) =>
+      prev.includes(src) ? prev.filter((v) => v !== src) : [...prev, src]
+    );
+  };
+
   const swipeHandlers = useSwipeable({
     onSwipedLeft: handleNext,
     onSwipedRight: handlePrev,
@@ -127,14 +130,14 @@ const Carousel: React.FC = () => {
   return (
     <section className="carousel">
       <div className="carousel__title-container">
-        <h2 className="carousel__title">
-          {isDesktop ? "A day in the life" : "A day in the life..."}
+      <h2 className="carousel__title">
+          {isDesktop ? "A day in the life" : "a day in the life..."}
         </h2>
         {isDesktop && (
-        <div className="carousel__arrows">
-          <button onClick={handlePrev} className="carousel__arrow carousel__arrow--prev"><ChevronLeft /></button>
-          <button onClick={handleNext} className="carousel__arrow carousel__arrow--next"><ChevronRight /></button>
-        </div>
+          <div className="carousel__arrows">
+            <button onClick={handlePrev} className="carousel__arrow carousel__arrow--prev"><ChevronLeft /></button>
+            <button onClick={handleNext} className="carousel__arrow carousel__arrow--next"><ChevronRight /></button>
+          </div>
         )}
       </div>
 
@@ -142,8 +145,9 @@ const Carousel: React.FC = () => {
         <div className="carousel__scroller" ref={containerRef}>
           {visibleVideos.map((item, i) => {
             const isActive = isDesktop ? i === 2 : i === 1;
+            const isSaved = saved.includes(item.src);
             return (
-              <div className="carousel__item" key={item.src}> {/*  changed key from index to item.src */}
+              <div className="carousel__item" key={item.src}>
                 <div className="carousel__video-container">
                   <div className={`carousel__video-box ${isActive ? "carousel__video-box--active" : ""}`}>
                     <video
@@ -156,22 +160,28 @@ const Carousel: React.FC = () => {
                       playsInline
                     />
                   </div>
-                  {isActive && (
-                    <div className="carousel__controls">
-                      <button onClick={togglePlay}>
-                        <img src={isPlaying ? pauseIcon : playIcon} alt="Play/Pause" />
-                      </button>
-                      <button onClick={toggleMute}>
-                        <img src={isMuted ? soundOffIcon : soundOnIcon} alt="Sound Toggle" />
-                      </button>
-                    </div>
-                  )}
+                  <div className="carousel__controls">
+                    <button onClick={() => toggleSave(item.src)}>
+                      <Heart color={isSaved ? "red" : "white"} fill={isSaved ? "red" : "none"} />
+                    </button>
+                    {isActive && (
+                      <>
+                        <button onClick={togglePlay}>
+                          <img src={isPlaying ? pauseIcon : playIcon} alt="Play/Pause" />
+                        </button>
+                        <button onClick={toggleMute}>
+                          <img src={isMuted ? soundOffIcon : soundOnIcon} alt="Sound Toggle" />
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
                 <p className="carousel__caption">{item.title}</p>
               </div>
             );
           })}
         </div>
+        <div className="carousel__progress-bar" />
       </div>
     </section>
   );
