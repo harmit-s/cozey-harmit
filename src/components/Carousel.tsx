@@ -95,13 +95,13 @@ const Carousel: React.FC = () => {
 
       if (shouldBePlaying) {
         if (isPlaying) {
-          video.play().catch(() => { }); 
+          video.play().catch(() => { });
         } else {
           video.pause();
         }
       } else {
         if (!video.paused) video.pause();
-        video.currentTime = 0; 
+        video.currentTime = 0;
       }
     });
   }, [isPlaying, isMuted, visibleVideos, isDesktop]);
@@ -127,11 +127,15 @@ const Carousel: React.FC = () => {
   return (
     <section className="carousel">
       <div className="carousel__title-container">
-        <h2 className="carousel__title">A day in the life...</h2>
+        <h2 className="carousel__title">
+          {isDesktop ? "A day in the life" : "A day in the life..."}
+        </h2>
+        {isDesktop && (
         <div className="carousel__arrows">
           <button onClick={handlePrev} className="carousel__arrow carousel__arrow--prev"><ChevronLeft /></button>
           <button onClick={handleNext} className="carousel__arrow carousel__arrow--next"><ChevronRight /></button>
         </div>
+        )}
       </div>
 
       <div className="carousel__wrapper" {...(!isDesktop ? swipeHandlers : {})}>
