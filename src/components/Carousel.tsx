@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { useSwipeable } from "react-swipeable";
-import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart, X } from "lucide-react";
 import useMediaQuery from "../useMediaQuery";
 import "../styles/Carousel.scss";
 
@@ -48,6 +48,8 @@ const Carousel: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [saved, setSaved] = useState<string[]>([]);
+  const [showModal, setShowModal] = useState(false);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const isDesktop = useMediaQuery("(min-width: 1280px)");
@@ -86,16 +88,11 @@ const Carousel: React.FC = () => {
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
-
       const shouldBePlaying = isDesktop ? index === 2 : index === 1;
       video.muted = isMuted;
-
       if (shouldBePlaying) {
-        if (isPlaying) {
-          void video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
+        if (isPlaying) void video.play().catch(() => { });
+        else video.pause();
       } else {
         if (!video.paused) video.pause();
         video.currentTime = 0;
@@ -103,14 +100,8 @@ const Carousel: React.FC = () => {
     });
   }, [isPlaying, isMuted, visibleVideos, isDesktop]);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % baseLength);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + baseLength) % baseLength);
-  };
-
+  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % baseLength);
+  const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + baseLength) % baseLength);
   const togglePlay = () => setIsPlaying((p) => !p);
   const toggleMute = () => setIsMuted((m) => !m);
 
@@ -130,7 +121,7 @@ const Carousel: React.FC = () => {
   return (
     <section className="carousel">
       <div className="carousel__title-container">
-      <h2 className="carousel__title">
+        <h2 className="carousel__title">
           {isDesktop ? "A day in the life" : "a day in the life..."}
         </h2>
         {isDesktop && (
@@ -139,6 +130,9 @@ const Carousel: React.FC = () => {
             <button onClick={handleNext} className="carousel__arrow carousel__arrow--next"><ChevronRight /></button>
           </div>
         )}
+        <button className="carousel__favorites-button" onClick={() => setShowModal(true)}>
+          ❤️ Favorites
+        </button>
       </div>
 
       <div className="carousel__wrapper" {...(!isDesktop ? swipeHandlers : {})}>
@@ -156,7 +150,7 @@ const Carousel: React.FC = () => {
                       }}
                       src={item.src}
                       className="carousel__video"
-                      preload={i <= (isDesktop ? 4 : 2) ? "metadata" : "none"}
+                      preload="metadata"
                       playsInline
                     />
                   </div>
@@ -182,12 +176,45 @@ const Carousel: React.FC = () => {
           })}
         </div>
         <div className="carousel__progress-bar" />
+        
       </div>
+
+      {showModal && (
+        <div className="carousel__modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="carousel__modal" onClick={(e) => e.stopPropagation()}>
+            <button className="carousel__modal-close" onClick={() => setShowModal(false)}>
+              <X />
+            </button>
+            <h3 className="carousel__modal-title">Your Favorites</h3>
+            {saved.length === 0 ? (
+              <p className="carousel__modal-empty">You haven't saved any videos yet. Tap the ❤️ to save your favorites!</p>
+            ) : (
+              <div className="carousel__modal-list">
+                {saved.map((src) => {
+                  const videoData = rawVideos.find((v) => v.src === src);
+                  return (
+                    <div className="carousel__modal-item" key={src}>
+                      <video src={src} muted loop preload="metadata" className="carousel__modal-thumb" />
+                      <div className="carousel__modal-meta">
+                        <p>{videoData?.title}</p>
+                        <button onClick={() => toggleSave(src)}>
+                          <Heart color="red" fill="red" />
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
 
 export default Carousel;
+
 
 
 

@@ -217,4 +217,140 @@
       left: 100%;
     }
   }
+
+  &__favorites-button {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 11.25rem;
+    background-color: #0f172a;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 9999px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    z-index: 50;
+    cursor: pointer;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    &:hover {
+      background-color: #1e293b;
+    }
+
+    @media (max-width: 1279px) {
+      bottom: 0.7rem;
+      right: 2.5rem;
+    }
+  }
+
+  &__modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+  }
+
+  &__modal {
+    background: white;
+    border-radius: 1rem;
+    max-width: 90%;
+    width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 41;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+    @media (min-width: 1280px) {
+      max-width: 600px;
+    }
+
+    &-thumb {
+        width: 5rem;
+        height: 10rem;
+        border-radius: 0.5rem;
+        object-fit: cover;
+    }
+  }
+
+  &__modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #0f172a;
+    cursor: pointer;
+
+    &:hover {
+      color: #333;
+    }
+  }
+
+  &__modal-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+    text-align: center;
+  }
+
+  &__modal-list {
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
+
+    p {
+      flex-grow: 1;
+      margin: 0;
+      font-weight: 500;
+      color: #0f172a;
+    }
+
+    button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+
+      svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        color: red;
+      }
+    }
+  }
+
+  &__modal-empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.95rem;
+    color: #64748b;
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      background-color: #0f172a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #1e293b;
+      }
+    }
+  }
 }
